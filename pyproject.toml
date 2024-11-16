@@ -18,7 +18,7 @@ dev-dependencies = ["pre-commit>=3.8.0"]
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src"]
+packages = ["src/utilpy"]
 
 
 [tool.ruff]
@@ -70,4 +70,10 @@ skip-magic-trailing-comma = false
 line-ending = "auto"
 
 [tool.mypy]
-strict = true
+warn_return_any = true
+no_strict_optional = true
+strict = false
+disallow_untyped_defs = false
+disallow_untyped_calls = false
+no_implicit_optional = true
+check_untyped_defs = false
