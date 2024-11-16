@@ -1,5 +1,5 @@
 [project]
-name = "python_util"
+name = "utilpy"
 version = "0.1.0"
 description = "My Python Template"
 authors = [{ name = "kaki005", email = "u097498f@ecs.osaka-u.ac.jp" }]
