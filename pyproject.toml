@@ -3,7 +3,9 @@ name = "utilpy"
 version = "0.1.0"
 description = "My Python Template"
 authors = [{ name = "kaki005", email = "u097498f@ecs.osaka-u.ac.jp" }]
-dependencies = []
+dependencies = [
+    "jax>=0.4.35",
+]
 readme = "README.md"
 
 [build-system]
@@ -37,6 +39,7 @@ select = [
     "UP", # pyupgrade
 ]
 fixable = ["ALL"]
+unfixable = ["F401"] # imported but not used
 # 除外するエラーの種類
 ignore = [
     "E501",  # line too long, handled by black
@@ -75,4 +78,5 @@ strict = false
 disallow_untyped_defs = false
 disallow_untyped_calls = false
 no_implicit_optional = true
-check_untyped_defs = false
+check_untyped_defs = true
+ignore_missing_imports = true
