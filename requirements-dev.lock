@@ -14,14 +14,19 @@ cfgv==3.4.0
     # via pre-commit
 distlib==0.3.8
     # via virtualenv
+equinox==0.11.8
+    # via utilpy
 filelock==3.15.4
     # via virtualenv
 identify==2.6.0
     # via pre-commit
 jax==0.4.35
+    # via equinox
     # via utilpy
 jaxlib==0.4.35
     # via jax
+jaxtyping==0.2.36
+    # via equinox
 ml-dtypes==0.5.0
     # via jax
     # via jaxlib
@@ -42,5 +47,7 @@ pyyaml==6.0.2
 scipy==1.14.1
     # via jax
     # via jaxlib
+typing-extensions==4.12.2
+    # via equinox
 virtualenv==20.26.3
     # via pre-commit
