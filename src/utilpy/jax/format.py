@@ -1,3 +1,4 @@
+from pprint import pformat
 from typing import Any, Optional
 
 import equinox as eqx
@@ -5,6 +6,8 @@ import jax
 from jax.tree_util import PyTreeDef
 
 from utilpy import StringBuilder
+
+UNIT: str = "+\t"
 
 
 def format_pytreedef(treedef: PyTreeDef) -> str:
@@ -16,19 +19,18 @@ def format_pytreedef(treedef: PyTreeDef) -> str:
             display_data = "(Leaf)"
             if leaf_name != "":
                 display_data = f"{display_data}: {leaf_name}"
-        elif node_data[1] is None:
+        else:
             display_data = node_data[0]
-        elif isinstance(node_data[1], eqx._module._FlattenedData):
-            display_data = node_data[0]
-            flattend_data = node_data[1]
+            if isinstance(node_data[1], eqx._module._FlattenedData):
+                flattend_data = node_data[1]
 
         if depth == 0:
             sb.Append(f"{display_data}\n")
         else:
-            sb.Append(f"{"\t"*depth}+--> {display_data} \n")
+            sb.Append(f"{UNIT*depth}+--> {display_data} \n")
         if flattend_data is not None:
             for name, value in zip(flattend_data.static_field_names, flattend_data.static_field_values, strict=False):
-                sb.Append(f"{"\t"*(depth+1)}(static): {name} : {value} \n")
+                sb.Append(f"{UNIT*(depth+1)}(static): {name} : {value} \n")
             for child, name in zip(children, flattend_data.dynamic_field_names, strict=False):
                 sb = format_pytreedef_inner(child, sb, depth + 1, name)
         else:
@@ -49,21 +51,32 @@ def format_pytree(tree: Any) -> str:
         node_data = node.node_data()
         flattend_data: eqx._module._FlattenedData | None = None
         if node_data is None:
-            display_data = f"(Leaf){leaf_name}: {tree_param[index]}"
+            leaf = pformat(tree_param[index])
+
+            display_data = ""
+            if "\n" in leaf:
+                lines = leaf.split("\n")
+                unit = "\t" if index == len(tree_param) - 1 else UNIT
+                for i, line in enumerate(lines):
+                    display_data += f"{"(Leaf) " if i == 0 else unit*(depth+1)}{line}"
+                    if i != len(lines) - 1:
+                        display_data += "\n"
+            else:
+                display_data = f"(Leaf) {leaf}"
             index += 1
-        elif node_data[1] is None:
+
+        else:
             display_data = node_data[0]
-        elif isinstance(node_data[1], eqx._module._FlattenedData):
-            display_data = node_data[0]
-            flattend_data = node_data[1]
+            if node_data[1] is not None and isinstance(node_data[1], eqx._module._FlattenedData):
+                flattend_data = node_data[1]
 
         if depth == 0:
             sb.Append(f"{display_data}\n")
         else:
-            sb.Append(f"{"\t"*depth}+--> {display_data} \n")
+            sb.Append(f"{UNIT*depth}+--> {display_data} \n")
         if flattend_data is not None:
             for name, value in zip(flattend_data.static_field_names, flattend_data.static_field_values, strict=False):
-                sb.Append(f"{"\t"*(depth+1)}(static): {name} : {value} \n")
+                sb.Append(f"{"+\t"*(depth+1)}(static): {name} : {value} \n")
             for child, name in zip(children, flattend_data.dynamic_field_names, strict=False):
                 sb, index = format_pytree_inner(child, sb, index, depth + 1, name)
         else:
