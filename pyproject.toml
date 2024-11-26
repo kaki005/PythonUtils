@@ -3,13 +3,7 @@ name = "utilpy"
 version = "0.1.0"
 description = "My Python Template"
 authors = [{ name = "kaki005", email = "u097498f@ecs.osaka-u.ac.jp" }]
-dependencies = [
-    "jax>=0.4.35",
-    "equinox>=0.11.9",
-    "rich>=13.9.4",
-    "pyyaml>=6.0.2",
-    "types-pyyaml>=6.0.12.20240917",
-]
+dependencies = ["jax>=0.4.35", "equinox>=0.11.9", "rich>=13.9.4"]
 readme = "README.md"
 
 [build-system]
