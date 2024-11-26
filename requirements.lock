@@ -19,6 +19,10 @@ jaxlib==0.4.35
     # via jax
 jaxtyping==0.2.36
     # via equinox
+markdown-it-py==3.0.0
+    # via rich
+mdurl==0.1.2
+    # via markdown-it-py
 ml-dtypes==0.5.0
     # via jax
     # via jaxlib
@@ -29,6 +33,10 @@ numpy==2.1.3
     # via scipy
 opt-einsum==3.4.0
     # via jax
+pygments==2.18.0
+    # via rich
+rich==13.9.4
+    # via utilpy
 scipy==1.14.1
     # via jax
     # via jaxlib

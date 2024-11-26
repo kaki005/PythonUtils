@@ -6,6 +6,7 @@ authors = [{ name = "kaki005", email = "u097498f@ecs.osaka-u.ac.jp" }]
 dependencies = [
     "jax>=0.4.35",
     "equinox>=0.11.8",
+    "rich>=13.9.4",
 ]
 readme = "README.md"
 
