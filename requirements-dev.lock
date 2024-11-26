@@ -50,11 +50,14 @@ pygments==2.18.0
     # via rich
 pyyaml==6.0.2
     # via pre-commit
+    # via utilpy
 rich==13.9.4
     # via utilpy
 scipy==1.14.1
     # via jax
     # via jaxlib
+types-pyyaml==6.0.12.20240917
+    # via utilpy
 typing-extensions==4.12.2
     # via equinox
 virtualenv==20.26.3
