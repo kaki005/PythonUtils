@@ -14,7 +14,7 @@ cfgv==3.4.0
     # via pre-commit
 distlib==0.3.8
     # via virtualenv
-equinox==0.11.8
+equinox==0.11.9
     # via utilpy
 filelock==3.15.4
     # via virtualenv

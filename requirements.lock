@@ -10,7 +10,7 @@
 #   universal: false
 
 -e file:.
-equinox==0.11.8
+equinox==0.11.9
     # via utilpy
 jax==0.4.35
     # via equinox
