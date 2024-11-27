@@ -34,6 +34,8 @@ mdurl==0.1.2
 ml-dtypes==0.5.0
     # via jax
     # via jaxlib
+multipledispatch==1.0.0
+    # via utilpy
 nodeenv==1.9.1
     # via pre-commit
 numpy==2.1.3

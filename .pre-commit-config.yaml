@@ -29,7 +29,7 @@ repos:
         description: "Run 'mypy' for Python linting"
         entry: mypy
         language: python
-        args: []
+        args: ["--config-file=pyproject.toml"]
         require_serial: true
         # Add types package list
         additional_dependencies: []

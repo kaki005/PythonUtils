@@ -1,4 +1,4 @@
-from utilpy import LapTime, lap_time
+from utilpy import LapTime, StringBuilder, lap_time
 
 
 def fibonacci(n):
@@ -13,6 +13,12 @@ def fibonacci(n):
 def main():
     with LapTime("hello"):
         fibonacci(20)
+
+    sb = StringBuilder()
+    sb.Append("aaa")
+    sb.AppendLine()
+    sb.AppendLine("bbb")
+    print(sb)
 
 
 if __name__ == "__main__":

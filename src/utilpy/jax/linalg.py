@@ -32,6 +32,11 @@ def householder(v: jnp.ndarray, D: int) -> Float[Array, "D D"]:
 
 @eqx.filter_jit
 def orthogonal_matrix(vs: list[jnp.ndarray], D: int, Q: int) -> Float[Array, "D Q"]:
+    """create column orthogonal matrix (D×Q)
+
+    Returns:
+        jnp.ndarray: column orthogonal matrix (D×Q)
+    """
     U = jnp.eye(D, dtype=jnp.double)
     for i, v in enumerate(vs):
         H_n = householder(v, D)
