@@ -1,4 +1,9 @@
-from utilpy import LapTime, StringBuilder, lap_time
+import os
+import pathlib
+import sys
+
+import rich
+from utilpy import LapTime, StringBuilder, format_directory
 
 
 def fibonacci(n):
@@ -6,8 +11,7 @@ def fibonacci(n):
         return 0
     if n == 1:
         return 1
-    else:
-        return fibonacci(n - 1) + fibonacci(n - 2)
+    return fibonacci(n - 1) + fibonacci(n - 2)
 
 
 def main():
@@ -19,6 +23,14 @@ def main():
     sb.AppendLine()
     sb.AppendLine("bbb")
     print(sb)
+
+    try:
+        directory = os.path.abspath(sys.argv[1])
+    except IndexError:
+        print("[b]Usage:[/] python tree.py <DIRECTORY>")
+    else:
+        tree = format_directory(pathlib.Path(directory))
+        rich.print(tree)
 
 
 if __name__ == "__main__":
