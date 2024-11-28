@@ -62,9 +62,9 @@ def print_pytree(pytree: PyTree, max_length: int = 5, is_hide_big_node: bool = T
             display_data = pformat(tree_param[index])
             if len(display_data.split("\n")) > max_length and is_hide_big_node:
                 if isinstance(display_data, jax.numpy.ndarray):
-                    display_data = display_data.shape
+                    display_data = f"[orange][bold]jax.numpy.ndarray ({display_data.shape})[/][/]"
                 else:
-                    display_data = f"{type(tree_param[index])}"
+                    display_data = f"[orange][bold]{type(tree_param[index])}[/][/]"
             index += 1
 
         else:
@@ -73,11 +73,11 @@ def print_pytree(pytree: PyTree, max_length: int = 5, is_hide_big_node: bool = T
                 flattend_data = node_data[1]
 
         if leaf_name != "":
-            display_data = f"[red][bold]{leaf_name}[/bold][/red]: {display_data}"
+            display_data = f"[blue][bold]{leaf_name}[/][/]: {display_data}"
         branch = tree.add(f"{display_data}")
         if flattend_data is not None:
             for name, value in zip(flattend_data.static_field_names, flattend_data.static_field_values, strict=False):
-                branch.add(f"[blue][bold](static)[/bold][/blue]: [red][bold]{name}[/bold][/red] : {value}")
+                branch.add(f"[yellow][bold]static[/][/]: [blue][bold]{name}[/][/] : {value}")
             for child, name in zip(children, flattend_data.dynamic_field_names, strict=False):
                 index = print_pytree_inner(child, branch, index, name)
         else:
