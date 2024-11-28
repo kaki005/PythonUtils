@@ -66,9 +66,10 @@ def print_pytree(pytree: PyTree, max_length: int = 5, is_hide_big_node: bool = T
                 else:
                     display_data = f"[orange][bold]{type(tree_param[index])}[/][/]"
             index += 1
+            display_data = f":LEAF FLUTTERING IN WIND: {display_data}"
 
         else:
-            display_data = node_data[0]
+            display_data = f"[orange][bold]{node_data[0]}[/][/]"
             if node_data[1] is not None and isinstance(node_data[1], eqx._module._FlattenedData):
                 flattend_data = node_data[1]
 
