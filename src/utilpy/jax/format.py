@@ -43,7 +43,13 @@ def format_pytreedef(treedef: PyTreeDef) -> str:
     return f"{format_pytreedef_inner(treedef, StringBuilder(), 0)}"
 
 
-def print_pytree(pytree: PyTree, highlight=False, max_length: int = 5, is_hide_big_node: bool = True) -> None:
+def print_pytree(
+    pytree: PyTree,
+    highlight: bool = False,
+    max_length: int = 5,
+    is_hide_big_node: bool = True,
+    show_static: bool = True,
+) -> None:
     tree_param, treedef = jax.tree.flatten(pytree)
     root_tree = Tree(
         label="pytree",
@@ -78,8 +84,11 @@ def print_pytree(pytree: PyTree, highlight=False, max_length: int = 5, is_hide_b
             display_data = f"[blue][bold]{leaf_name}[/][/]: {display_data}"
         branch = tree.add(f"{display_data}")
         if flattend_data is not None:
-            for name, value in zip(flattend_data.static_field_names, flattend_data.static_field_values, strict=False):
-                branch.add(f"[yellow][bold](static)[/][/]: [blue][bold]{name}[/][/] : {value}")
+            if show_static:  # staticプロパティを表示するなら
+                for name, value in zip(
+                    flattend_data.static_field_names, flattend_data.static_field_values, strict=False
+                ):
+                    branch.add(f"[yellow][bold](static)[/][/]: [blue][bold]{name}[/][/] : {value}")
             for child, name in zip(children, flattend_data.dynamic_field_names, strict=False):
                 index = print_pytree_inner(child, branch, index, name)
         else:
