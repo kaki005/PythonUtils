@@ -43,10 +43,12 @@ def format_pytreedef(treedef: PyTreeDef) -> str:
     return f"{format_pytreedef_inner(treedef, StringBuilder(), 0)}"
 
 
-def print_pytree(pytree: PyTree, max_length: int = 5, is_hide_big_node: bool = True) -> None:
+def print_pytree(pytree: PyTree, highlight=False, max_length: int = 5, is_hide_big_node: bool = True) -> None:
     tree_param, treedef = jax.tree.flatten(pytree)
     root_tree = Tree(
         label="pytree",
+        hide_root=True,
+        highlight=highlight,
     )
 
     def print_pytree_inner(
