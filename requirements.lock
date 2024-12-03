@@ -10,8 +10,14 @@
 #   universal: false
 
 -e file:.
+contourpy==1.3.1
+    # via matplotlib
+cycler==0.12.1
+    # via matplotlib
 equinox==0.11.9
     # via utilpy
+fonttools==4.55.0
+    # via matplotlib
 jax==0.4.35
     # via equinox
     # via utilpy
@@ -19,8 +25,12 @@ jaxlib==0.4.35
     # via jax
 jaxtyping==0.2.36
     # via equinox
+kiwisolver==1.4.7
+    # via matplotlib
 markdown-it-py==3.0.0
     # via rich
+matplotlib==3.9.3
+    # via utilpy
 mdurl==0.1.2
     # via markdown-it-py
 ml-dtypes==0.5.0
@@ -28,19 +38,42 @@ ml-dtypes==0.5.0
     # via jaxlib
 multipledispatch==1.0.0
     # via utilpy
+networkx==3.4.2
+    # via utilpy
 numpy==2.1.3
+    # via contourpy
     # via jax
     # via jaxlib
+    # via matplotlib
     # via ml-dtypes
+    # via pandas
     # via scipy
 opt-einsum==3.4.0
     # via jax
+packaging==24.2
+    # via matplotlib
+pandas==2.2.3
+    # via utilpy
+pillow==11.0.0
+    # via matplotlib
 pygments==2.18.0
     # via rich
+pyparsing==3.2.0
+    # via matplotlib
+python-dateutil==2.9.0.post0
+    # via matplotlib
+    # via pandas
+pytz==2024.2
+    # via pandas
 rich==13.9.4
     # via utilpy
 scipy==1.14.1
     # via jax
     # via jaxlib
+    # via utilpy
+six==1.16.0
+    # via python-dateutil
 typing-extensions==4.12.2
     # via equinox
+tzdata==2024.2
+    # via pandas

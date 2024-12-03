@@ -16,5 +16,5 @@
   logger: logging.Logger = logging.getLogger(__name__)
   logger.info(format_pytree([343, [322, 0.3], 3]))
   ```
-  ![](data/jax_pytree_format1.png)
-  ![](data/jax_pytree_format2.png)
+  ![](fig/jax_pytree_format1.png)
+  ![](fig/jax_pytree_format2.png)

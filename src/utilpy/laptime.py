@@ -1,8 +1,6 @@
 import time
 from functools import wraps
 from logging import Logger
-from math import log
-from re import A
 from typing import Any, Callable
 
 
@@ -34,10 +32,10 @@ class LapTime:
         Args:
             message (str, optional): log message. Defaults to "Elapsed time".
             write_log (bool, optional): whether to output log on console. Defaults to True.
-            time_func (Callable, optional): _description_. Defaults to time.process_time.
+            time_func (Callable, optional): meas time function. Defaults to time.process_time.
             logger: logging class
         """
-        self.timer = time_func
+        self.timer: Callable = time_func
         self.message = message
         self.write_log = write_log
         self.logger: Logger | None = logger

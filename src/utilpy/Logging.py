@@ -1,7 +1,5 @@
 import logging
 
-import rich
-import rich.highlighter
 import rich.pretty as pretty
 from rich.logging import RichHandler
 
