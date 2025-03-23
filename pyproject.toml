@@ -1,6 +1,6 @@
 [project]
 name = "utilpy"
-version = "0.1.1"
+version = "0.1.2"
 description = "My Python utility"
 authors = [{ name = "kaki005", email = "u097498f@ecs.osaka-u.ac.jp" }]
 dependencies = [
