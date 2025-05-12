@@ -7,11 +7,6 @@ from rich.logging import RichHandler
 from rich.theme import Theme
 
 
-class OriginalFormatter(logging.Formatter):
-    def format(self, record: logging.LogRecord):
-        return pretty.Pretty(record.msg)
-
-
 def log_init(theme: Theme | None = mocha, level=logging.INFO):
     console = Console(theme=theme) if theme is not None else None
     handler = RichHandler(console=console, markup=True, rich_tracebacks=True)

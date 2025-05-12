@@ -1,7 +1,9 @@
+import logging
 import time
+from collections.abc import Callable
 from functools import wraps
 from logging import Logger
-from typing import Any, Callable
+from typing import Any
 
 
 def lap_time(timer: Callable = time.process_time) -> Callable:
@@ -23,22 +25,21 @@ class LapTime:
     def __init__(
         self,
         message: str = "Elapsed time",
-        write_log: bool = True,
         time_func: Callable = time.process_time,
-        logger: Logger | None = None,
+        disable: bool = False,
     ) -> None:
         """
 
         Args:
             message (str, optional): log message. Defaults to "Elapsed time".
-            write_log (bool, optional): whether to output log on console. Defaults to True.
             time_func (Callable, optional): meas time function. Defaults to time.process_time.
-            logger: logging class
+            disable (bool, optional): whether to disable log on console. Defaults to Dlaw.
+
         """
         self.timer: Callable = time_func
         self.message = message
-        self.write_log = write_log
-        self.logger: Logger | None = logger
+        self.disable = disable
+        self.logger: Logger = logging.getLogger()
 
     def __enter__(self) -> None:
         self.start = self.timer()
@@ -46,9 +47,6 @@ class LapTime:
     def __exit__(self, type, value, traceback) -> None:
         end = self.timer()
         msg = f"{self.message}: {(end - self.start):.6f} [sec]"
-        if not self.write_log:
+        if self.disable:
             return
-        if self.logger is None:
-            print(msg)
-        else:
-            self.logger.info(msg)
+        self.logger.info(msg, stacklevel=2)
