@@ -67,7 +67,6 @@ def print_pytree(
     show_static: bool = True,
 ) -> None:
     """Decompose a pytree and print its tree structure and values."""
-    print(f"{STATIC_COLOR=}")
     tree_param, treedef = jax.tree.flatten(pytree)
     root_tree = Tree(
         label="pytree",
