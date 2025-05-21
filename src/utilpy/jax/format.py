@@ -4,15 +4,18 @@ from typing import cast
 import equinox as eqx
 import jax
 import rich
+from catppuccin import PALETTE
 from jax.tree_util import PyTreeDef
 from jaxtyping import PyTree
 from rich.tree import Tree
 
-PROP_NAME_COLOR = "blue"
+COLORS = PALETTE.latte.colors
+# PROP_NAME_COLOR = "blue"
+PROP_NAME_COLOR = COLORS.sky.hex
 """color of property name"""
-STATIC_COLOR = "yellow"
+STATIC_COLOR = COLORS.yellow.hex
 """color of static attribute"""
-TYPE_COLOR = "orange1"
+TYPE_COLOR = COLORS.rosewater.hex
 """color of property type"""
 
 
@@ -64,6 +67,7 @@ def print_pytree(
     show_static: bool = True,
 ) -> None:
     """Decompose a pytree and print its tree structure and values."""
+    print(f"{STATIC_COLOR=}")
     tree_param, treedef = jax.tree.flatten(pytree)
     root_tree = Tree(
         label="pytree",
@@ -98,9 +102,7 @@ def print_pytree(
         ):  # FlattenedDataなら
             flattend_data = cast(eqx._module._FlattenedData, node_data[1])  # cast
             if show_static:  # staticプロパティを表示するなら
-                for name, value in zip(
-                    flattend_data.static_field_names, flattend_data.static_field_values, strict=False
-                ):
+                for name, value in flattend_data.static_fields:
                     branch.add(f"[{STATIC_COLOR}][bold](static)[/][/]: [{PROP_NAME_COLOR}][bold]{name}[/][/] : {value}")
             for child, name in zip(children, flattend_data.dynamic_field_names, strict=False):  # 各子どもを
                 index = print_pytree_inner(child, branch, index, name)  # プロパティ名つきで描画
