@@ -6,7 +6,7 @@ from logging import Logger
 from typing import Any
 
 
-def lap_time(timer: Callable = time.process_time) -> Callable:
+def lap_time(timer: Callable = time.perf_counter) -> Callable:
     """wrapper for measuring executed time of function"""
 
     def laptime_wrapper(func):
@@ -25,14 +25,14 @@ class LapTime:
     def __init__(
         self,
         message: str = "Elapsed time",
-        time_func: Callable = time.process_time,
+        time_func: Callable = time.perf_counter,
         disable: bool = False,
     ) -> None:
         """
 
         Args:
             message (str, optional): log message. Defaults to "Elapsed time".
-            time_func (Callable, optional): meas time function. Defaults to time.process_time.
+            time_func (Callable, optional): meas time function. Defaults to time.perf_counter.
             disable (bool, optional): whether to disable log on console. Defaults to Dlaw.
 
         """
