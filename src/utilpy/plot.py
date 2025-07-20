@@ -1,6 +1,9 @@
+import datetime
 from pathlib import Path
 
+import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -47,6 +50,63 @@ def plot_pr_curve(fig_path: Path, true_labels: np.ndarray, anomaly_scores: np.nd
     plt.grid(True)
     plt.savefig(fig_path)
     return pr_auc, precision, recall, thresholds
+
+
+def set_major_tick_per_day(
+    ax: Axes,
+    timeColumn: pd.DatetimeIndex | pd.Series | np.ndarray | None = None,
+    start: datetime | None = None,
+    end: datetime | None = None,
+    label_loc: float = -0.03,
+    rotation: int = 0,
+    format: str = "%m-%d",
+):
+    if timeColumn is not None and isinstance(timeColumn, np.ndarray):
+        timeColumn = pd.Series(timeColumn)
+    if start is None:
+        assert timeColumn is not None
+        start = (
+            timeColumn.min().replace(hour=0, minute=0, second=0, microsecond=0).to_pydatetime()
+        )  # 開始を日付の始まりに設定
+    if end is None:
+        assert timeColumn is not None
+        end = pd.to_datetime(timeColumn.max()).to_pydatetime()
+    dayLocator = mdates.DayLocator()
+    ax.xaxis.set_major_locator(dayLocator)
+    ax.xaxis.set_major_formatter(mdates.DateFormatter(format))
+    for tick in dayLocator.tick_values(start, end):  # 日付の変わり目に
+        ax.axvline(x=tick, color="black", linestyle="--", lw=0.5)  # 縦線
+    for label in ax.get_xticklabels():  # 日付ラベルごとに
+        label.set_rotation(rotation)  # 回転
+        label.set_verticalalignment("top")  # ↓とセットで効く
+        label.set_y(label_loc)  # ← y座標を下にずらす（デフォルトより小さい値に）
+    return start, end
+
+
+def set_minor_tick(
+    ax: Axes,
+    timeColumn: pd.DatetimeIndex | pd.Series | np.ndarray | None = None,
+    start: datetime | None = None,
+    end: datetime | None = None,
+    freq="H",
+    format: str = "%H",
+):
+    if timeColumn is not None and isinstance(timeColumn, np.ndarray):
+        timeColumn = pd.Series(timeColumn)
+    if start is None:
+        assert timeColumn is not None
+        start = (
+            timeColumn.min().replace(hour=0, minute=0, second=0, microsecond=0).to_pydatetime()
+        )  # 開始を日付の始まりに設定
+    if end is None:
+        assert timeColumn is not None
+        end = pd.to_datetime(timeColumn.max()).to_pydatetime()
+    minor_ticks = pd.date_range(start=start, end=end, freq=freq)
+    minor_locator = ticker.FixedLocator(minor_ticks.map(mdates.date2num))
+    ax.xaxis.set_minor_locator(minor_locator)
+    for tick in minor_locator.tick_values(start, end):
+        ax.axvline(x=tick, color="gray", linestyle="--", lw=0.3)  #
+    ax.xaxis.set_minor_formatter(mdates.DateFormatter(format))
 
 
 def _get_predicted_labels_by_topk(scores, k):
