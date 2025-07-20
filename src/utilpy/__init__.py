@@ -1,5 +1,5 @@
 from .cd_diagram import draw_cd_diagram
-from .dataset import kagglehub_dir
+from .dataset import _convert_tcp_flag_to_int, kagglehub_dir
 from .laptime import LapTime, lap_time
 from .Logging import log_init
 from .RyeHelper import RyeHelper
