@@ -54,9 +54,8 @@ def load_sparse_matrix(
     row_labels_data = None
     if return_labels and f"{row_name}_labels" in df.columns:
         # row_labels_data は非ゼロ要素に対応するラベルのみ
-        row_labels_data = df[f"{row_name}_labels"].values
-        # もし元のrow_labelsの完全なリストが必要な場合は、別途保存する必要がある
-
+        row_labels_data, first_indices = np.unique(df[f"{row_name}_labels"].values, return_index=True)
+        row_labels_data = row_labels_data[np.argsort(first_indices)]
     return reconstructed_sparse_matrix, row_labels_data
 
 
