@@ -1,5 +1,5 @@
 from .cd_diagram import draw_cd_diagram
-from .dataset import _convert_tcp_flag_to_int, kagglehub_dir, to_datetime
+from .dataset import _convert_tcp_flag_to_int, kagglehub_dir, remove_na_or_inf, to_datetime
 from .laptime import LapTime, lap_time
 from .Logging import log_init
 from .matrix import load_sparse_matrix, save_sparse_matrix
