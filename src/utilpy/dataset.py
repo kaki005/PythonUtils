@@ -53,3 +53,20 @@ def to_datetime(value: pd.Timestamp | np.datetime64) -> datetime.datetime:
     if isinstance(value, np.datetime64):  # NumPy datetime64 の場合
         return pd.Timestamp(value).to_pydatetime()  # Pandas経由が最もロバスト
     raise Exception
+
+
+def datetime_base(timestamps: np.ndarray, base_time: pd.Timestamp, freq: str, time_scale: float = 1.0):
+    diff = (timestamps - np.array(base_time)).astype("timedelta64[us]")
+    return time_scale * (diff / freq_to_timedelta64(freq))
+
+
+def datetime_diff(timestamps: np.ndarray, freq: str, time_scale: float = 1.0):
+    diff = np.diff(timestamps).astype("timedelta64[us]")
+    convert_diff = time_scale * (diff / freq_to_timedelta64(freq))
+    return convert_diff
+
+
+def freq_to_timedelta64(freq_str):
+    """pandasのfreqからnp.timedelta64に変換します"""
+    offset = pd.tseries.frequencies.to_offset(freq_str)
+    return np.timedelta64(offset.delta)
