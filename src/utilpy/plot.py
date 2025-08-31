@@ -42,7 +42,7 @@ def set_major_tick_per_year(
     if start is None:
         assert timeColumn is not None
         start = (
-            timeColumn.min().replace(year=1, day=1, hour=0, minute=0, second=0, microsecond=0).to_pydatetime()
+            timeColumn.min().replace(month=1, day=1, hour=0, minute=0, second=0, microsecond=0).to_pydatetime()
         )  # 開始を日付の始まりに設定
     if end is None:
         assert timeColumn is not None
