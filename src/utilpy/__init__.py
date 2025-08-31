@@ -18,6 +18,8 @@ from .plot import (
     set_major_tick_per_month,
     set_major_tick_per_year,
     set_minor_tick,
+    set_minor_tick_per_day,
+    set_minor_tick_per_month,
 )
 from .RyeHelper import RyeHelper
 from .string_builder import StringBuilder
