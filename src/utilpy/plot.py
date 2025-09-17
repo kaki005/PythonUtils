@@ -33,7 +33,7 @@ def set_major_tick_per_year(
     end: datetime | None = None,
     label_loc: float = -0.03,
     rotation: int = 0,
-    format: str = "%y",
+    format: str = "%Y",
     tick_collor: str = "black",
     tick_linestyle: str = "--",
 ):
@@ -168,6 +168,7 @@ def set_minor_tick(
     format: str = "%H",
     tick_collor: str = "gray",
     tick_linestyle: str = "--",
+    show_labels: bool = True,
 ):
     if timeColumn is not None and isinstance(timeColumn, np.ndarray):
         timeColumn = pd.Series(timeColumn)
@@ -184,7 +185,8 @@ def set_minor_tick(
     ax.xaxis.set_minor_locator(minor_locator)
     for tick in minor_locator.tick_values(start, end):
         ax.axvline(x=tick, color=tick_collor, linestyle=tick_linestyle, lw=0.5)
-    ax.xaxis.set_minor_formatter(mdates.DateFormatter(format))
+    if show_labels:
+        ax.xaxis.set_minor_formatter(mdates.DateFormatter(format))
 
 
 def set_minor_tick_per_month(
@@ -197,6 +199,7 @@ def set_minor_tick_per_month(
     format: str = "%m",  # Changed to year-month format
     tick_collor: str = "gray",
     tick_linestyle: str = "--",
+    show_labels: bool = True,
 ):
     """
     Sets the minor ticks on the x-axis to the beginning of each month.
@@ -213,7 +216,8 @@ def set_minor_tick_per_month(
     # Use MonthLocator instead of DayLocator
     monthLocator = mdates.MonthLocator()
     ax.xaxis.set_minor_locator(monthLocator)
-    ax.xaxis.set_minor_formatter(mdates.DateFormatter(format))
+    if show_labels:
+        ax.xaxis.set_minor_formatter(mdates.DateFormatter(format))
     # Draw vertical lines at the beginning of each month
     for tick in monthLocator.tick_values(start, end):
         ax.axvline(x=tick, color=tick_collor, linestyle=tick_linestyle, lw=0.3)
@@ -228,6 +232,7 @@ def set_minor_tick_per_day(
     format: str = "%m-%d",
     tick_collor: str = "gray",
     tick_linestyle: str = "--",
+    show_labels: bool = True,
 ):
     if timeColumn is not None and isinstance(timeColumn, np.ndarray):
         timeColumn = pd.Series(timeColumn)
@@ -241,7 +246,8 @@ def set_minor_tick_per_day(
         end = pd.to_datetime(timeColumn.max()).to_pydatetime()
     dayLocator = mdates.DayLocator()
     ax.xaxis.set_minor_locator(dayLocator)
-    ax.xaxis.set_minor_formatter(mdates.DateFormatter(format))
-    for tick in dayLocator.tick_values(start, end):  # 日付の変わり目に
+    if show_labels:
+        ax.xaxis.set_minor_formatter(mdates.DateFormatter(format))
+    for tick in dayLocator.tick_values(start, end):  # 変わり目に
         ax.axvline(x=tick, color=tick_collor, linestyle=tick_linestyle, lw=0.3)
     return start, end
