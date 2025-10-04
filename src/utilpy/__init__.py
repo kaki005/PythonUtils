@@ -24,3 +24,4 @@ from .plot import (
 from .RyeHelper import RyeHelper
 from .string_builder import StringBuilder
 from .tree import format_directory
+from .zip import create_zip_archive
